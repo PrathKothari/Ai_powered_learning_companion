@@ -1,0 +1,13 @@
+langchain
+langchain_community
+langchain-text-splitters
+bs4
+langchain_groq
+langchain_core
+huggingface_hub
+wikipedia
+langchain_huggingface
+sentence_transformers
+flask
+flask-cors
+python-dotenv

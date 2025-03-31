@@ -1,27 +1,23 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import os
-import google.generativeai as genai
+# import google.generativeai as genai
 from dotenv import load_dotenv
-from functions import gemini_pro_response
+# from functions import gemini_pro_response
+from langchain_core.output_parsers import StrOutputParser
+from langchain_core.prompts import ChatPromptTemplate
+from langchain_groq import ChatGroq
 
 app = Flask(__name__)
 CORS(app)
 
 load_dotenv()
-api_key = os.getenv("api_key")
-genai.configure(api_key=api_key)
+os.environ['GROQ_API_KEY'] = os.getenv('GROQ_API_KEY')
+groq_api_key = os.getenv('GROQ_API_KEY')
 
-@app.route('/task', methods=['GET','POST'])
-def generate_guidance():
-    task = request.get_json()
-    technique = request.get_json()
-
-    if ((not task) or (not technique)):
-        return jsonify({"error": "No data provided"}), 400
-    
-    prompt=f'''I have ADHD and struggle with focus. I need to complete the following task: {task}. 
-                Break it into small, manageable subtasks that I can complete using the {technique}. 
+llm = ChatGroq(groq_api_key=groq_api_key, model_name="gemma2-9b-it", temperature=0.4, max_tokens = 500, presence_penalty = 0.5 )
+prompt = ChatPromptTemplate.from_template('''I have ADHD and struggle with focus. I need to complete the following task: <task>{task}<task>. 
+                Break it into small, manageable subtasks that I can complete using the <technique>{technique}<technique>. 
                 Each subtask should be clear, actionable, and time-bound. 
                 Also, suggest a reward system to keep me motivated. 
                 If the task is too complex, break it into multiple cycles with brief summaries after each cycle. 
@@ -53,11 +49,19 @@ def generate_guidance():
                 8. Summarize key points and conclude.
                 9. Proofread for clarity and grammar.
 
-                Reward: After finishing, enjoy 15 minutes of gaming, YouTube, or a small treat!'''
-    
-    task_division = gemini_pro_response(prompt)
-    
-    return task_division
+                Reward: After finishing, enjoy 15 minutes of gaming, YouTube, or a small treat! ''')
+response = llm.invoke(prompt)
+print(response)
+# @app.route('/task', methods=['GET','POST'])
+# def generate_guidance():
+#     task = request.get_json()
+#     technique = request.get_json()
 
-if __name__ == '__main__':
-    app.run(debug=True)
+#     if ((not task) or (not technique)):
+#         return jsonify({"error": "No data provided"}), 400
+    
+#     
+#     return task_division
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
