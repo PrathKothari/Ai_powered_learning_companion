@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "../login-form/LoginForm.css"; // Ensure folder name is correct
+import "../login-form/LoginForm.css";
 import { FaUser, FaLock } from "react-icons/fa";
 
-const LoginForm = () => {
+const LoginForm = ({ onRegisterClick }) => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
@@ -13,10 +13,6 @@ const LoginForm = () => {
 
     const handleForgotPassword = () => {
         alert("Redirect to forgot password page!");
-    };
-
-    const handleRegister = () => {
-        alert("Redirect to register page!");
     };
 
     return (
@@ -62,7 +58,7 @@ const LoginForm = () => {
                         Don't have an account? 
                         <button 
                             type="button" 
-                            onClick={handleRegister} 
+                            onClick={onRegisterClick} 
                             className="link-button"
                             aria-label="Register a new account"
                         >
