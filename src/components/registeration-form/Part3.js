@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './FormStyles.css';
+import { FaQuestionCircle } from 'react-icons/fa';
 
 const questions = [
   "How often do you struggle to stay focused when reading, listening, or working?",
@@ -23,8 +24,7 @@ const Part3 = ({ onNext }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const allAnswered = Object.keys(answers).length === questions.length;
-    if (!allAnswered) {
+    if (Object.keys(answers).length !== questions.length) {
       alert("Please answer all questions.");
       return;
     }
@@ -34,9 +34,16 @@ const Part3 = ({ onNext }) => {
   return (
     <form onSubmit={handleSubmit} className="form-section">
       {questions.map((q, i) => (
-        <div key={i}>
-          <label>{q}</label>
-          <select onChange={(e) => handleChange(e, i)} required>
+        <div className="question-block" key={i}>
+          <label className="question-label">
+            <FaQuestionCircle className="question-icon" />
+            {q}
+          </label>
+          <select
+            className="dropdown-select"
+            onChange={(e) => handleChange(e, i)}
+            required
+          >
             <option value="">-- Select --</option>
             <option value="0">Never (0)</option>
             <option value="1">Rarely (1)</option>
@@ -46,7 +53,7 @@ const Part3 = ({ onNext }) => {
           </select>
         </div>
       ))}
-      <button type="submit">Next</button>
+      <button type="submit" className="next-button">Next</button>
     </form>
   );
 };
