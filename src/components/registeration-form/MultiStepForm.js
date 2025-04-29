@@ -5,7 +5,7 @@ import Part3 from './Part3.js';
 import Part4 from './Part4.js';
 import ProgressBar from './ProgressBar.js';
 
-const MultiStepForm = () => {
+const MultiStepForm = ({ onFinishRegister }) => {
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({});
   const [part3Score, setPart3Score] = useState(0);
@@ -33,20 +33,31 @@ const MultiStepForm = () => {
     }
 
     else if (step === 2) {
-      if (data['Which type of ADHD?'] === "No idea") setStep(4);
-      else alert("Form submitted! (Previously Diagnosed)");
+      if (data['Which type of ADHD?'] === "No idea") {
+        setStep(4);
+      } else {
+        alert("Form submitted! (Previously Diagnosed)");
+        console.log("Final data:", { ...formData, ...data });
+        onFinishRegister(); // Success
+      }
     }
 
     else if (step === 3) {
       const score = Object.values(data).reduce((a, b) => a + parseInt(b), 0);
       setPart3Score(score);
-      if (score >= 15) setStep(4);
-      else alert("You likely do not have ADHD.");
+      if (score >= 15) {
+        setStep(4);
+      } else {
+        alert("You likely do not have ADHD.");
+        console.log("Form data:", { ...formData, ...data });
+        onFinishRegister(); // still allow entry for testing/demo
+      }
     }
 
     else if (step === 4) {
       alert("Final submission complete! (Undiagnosed flow)");
       console.log("All data submitted:", { ...formData, ...data });
+      onFinishRegister(); // Notify App
     }
   };
 

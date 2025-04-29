@@ -1,26 +1,49 @@
-import React from 'react';
-import { TimerProvider } from './contexts/TimerContext';
-import Timer from './components/Timer';
-import Dashboard from './components/Dashboard';
-import DarkModeToggle from './components/DarkModeToggle';
+import React, { useState } from "react";
+import LoginForm from "./components/login-form/LoginForm.jsx";
+import MultiStepForm from "./components/registeration-form/MultiStepForm.js";
+import { TimerProvider } from "./contexts/TimerContext.js";
+import Timer from "./components/Timer.js";
+import Dashboard from "./components/Dashboard.js";
+import DarkModeToggle from "./components/DarkModeToggle.js";
+
 function App() {
-  return (
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Renders login or registration form if user is not logged in
+  const renderAuthScreen = () => {
+    return isRegistering ? (
+      <MultiStepForm onFinishRegister={() => setIsLoggedIn(true)} />
+    ) : (
+      <LoginForm
+        onLoginSuccess={() => setIsLoggedIn(true)}
+        onRegisterClick={() => setIsRegistering(true)}
+      />
+    );
+  };
+
+  // Renders main dashboard with Pomodoro and theme toggle
+  const renderDashboard = () => (
     <TimerProvider>
-      <div>
+      <div className="App">
         <h1>AI Learning Companion</h1>
         <DarkModeToggle />
-        <Timer 
-          focusTime={25} 
-          breakTime={5} 
-          onFocusComplete={() => console.log("Focus time complete")} 
-          onBreakComplete={() => console.log("Break complete")} 
+        <Timer
+          focusTime={25}
+          breakTime={5}
+          onFocusComplete={() => console.log("Focus time complete")}
+          onBreakComplete={() => console.log("Break complete")}
         />
         <Dashboard />
       </div>
     </TimerProvider>
   );
+
+  return (
+    <div className="App">
+      {isLoggedIn ? renderDashboard() : renderAuthScreen()}
+    </div>
+  );
 }
 
 export default App;
-
-
