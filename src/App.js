@@ -1,19 +1,26 @@
-import React, { useState } from "react";
-import LoginForm from "./components/login-form/LoginForm.jsx";
-import MultiStepForm from "./components/registeration-form/MultiStepForm.js";
-
+import React from 'react';
+import { TimerProvider } from './contexts/TimerContext';
+import Timer from './components/Timer';
+import Dashboard from './components/Dashboard';
+import DarkModeToggle from './components/DarkModeToggle';
 function App() {
-  const [isRegistering, setIsRegistering] = useState(false);
-
   return (
-    <div className="App">
-      {isRegistering ? (
-        <MultiStepForm />
-      ) : (
-        <LoginForm onRegisterClick={() => setIsRegistering(true)} />
-      )}
-    </div>
+    <TimerProvider>
+      <div>
+        <h1>AI Learning Companion</h1>
+        <DarkModeToggle />
+        <Timer 
+          focusTime={25} 
+          breakTime={5} 
+          onFocusComplete={() => console.log("Focus time complete")} 
+          onBreakComplete={() => console.log("Break complete")} 
+        />
+        <Dashboard />
+      </div>
+    </TimerProvider>
   );
 }
 
 export default App;
+
+
