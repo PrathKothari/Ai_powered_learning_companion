@@ -30,14 +30,9 @@
     border: none;
     outline: none;
     border: 2px solid rgba(255, 255, 255, 0.2);
-    border-radius: 40px;
     font-size: 16px;
-    color: #fff;
+    color: black;
     padding: 20px 45px 20px 20px;
-}
-
-.input-box input::placeholder {
-    color: #fff;
 }
 
 .input-box .icon {
@@ -55,18 +50,20 @@
     margin: -15px 0 15px;
 }
 
-.remember-forgot label input {
-    accent-color: #fff;
+.remember-forgot label  {
+    color: #fff;
     margin-right: 4px;
+    width: 220px;
 }
 
-.remember-forgot a {
+.remember-forgot {
     color: #fff;
     text-decoration: none;
 }
 
 /* Fix incorrect hover selector */
-.remember-forgot a:hover {
+.remember-forgot :hover {
+    color: #fff;
     text-decoration: underline;
 }
 
