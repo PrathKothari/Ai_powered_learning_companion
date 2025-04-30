@@ -1,70 +1,39 @@
-# Getting Started with Create React App
+# 🧠 CogniSync: AI-Powered Learning Companion for ADHD Students
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+**CogniSync** is a React-based application designed to support students with **Attention Deficit Hyperactivity Disorder (ADHD)**. The platform leverages **AI and ML techniques** to deliver a **personalized, adaptive, and inclusive learning experience**. It aims to enhance **focus, comprehension, and engagement** by combining intelligent task management, customizable UI, and accessibility-first learning tools.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 📌 Abstract
 
-### `npm start`
+Students with ADHD often face significant challenges in **focus, time management, and cognitive processing**—resulting in academic underperformance and increased frustration. CogniSync addresses these barriers through an **AI-powered platform** tailored to individual ADHD profiles *(Inattentive, Hyperactive, Combined)*. It offers **adaptive strategies**, **interactive tools**, **progress tracking**, and **community support**, benefiting not just students, but also parents, educators, and mental health professionals. The goal is to foster **inclusive and effective learning environments** through the power of AI.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 🚀 Features
 
-### `npm test`
+### 🔍 Personalized Onboarding
+- Short assessment form to determine ADHD type  
+- Personalized strategies based on user profile
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 🎨 Customizable Interface
+- Change fonts, color themes, and visual modes (dark/light/focus)  
+- Reduces cognitive overload
 
-### `npm run build`
+### 🤖⏱️ AI-Powered Smart Task Management
+- Break tasks into subtasks using **Pomodoro Technique**  
+- Adaptive timers and planning suggestions
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 🧠 Interactive Learning Tools
+- Quizzes, flashcards, summaries  
+- Text-to-speech and speech-to-text support for **multimodal engagement**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 📊 AI-Powered Progress Tracking
+- Daily, weekly, and monthly reports  
+- Visual dashboards for performance insights
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 🧠🤝 Deep Learning–Enhanced Community Support
+- Connect with peers (public or anonymous groups)  
+- Deep learning for **intelligent group matching** and **emotional reinforcement**
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+---
