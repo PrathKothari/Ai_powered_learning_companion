@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import LoginForm from "./components/login-form/LoginForm.jsx";
 import MultiStepForm from "./components/registeration-form/MultiStepForm.js";
-import { TimerProvider } from "./contexts/TimerContext.js";
-import Timer from "./components/Timer.js";
 import Dashboard from "./components/Dashboard.js";
-import DarkModeToggle from "./components/DarkModeToggle.js";
 
 function App() {
   const [isRegistering, setIsRegistering] = useState(false);
@@ -22,7 +19,7 @@ function App() {
     );
   };
 
-  // Renders main dashboard with Pomodoro and theme toggle
+ /* // Renders main dashboard with Pomodoro and theme toggle
   const renderDashboard = () => (
     <TimerProvider>
       <div className="App">
@@ -38,10 +35,10 @@ function App() {
       </div>
     </TimerProvider>
   );
-
+*/
   return (
     <div className="App">
-      {isLoggedIn ? renderDashboard() : renderAuthScreen()}
+      {renderAuthScreen()}
     </div>
   );
 }

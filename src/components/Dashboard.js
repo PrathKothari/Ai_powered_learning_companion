@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import ProgressBar from './ProgressBar'; 
+import PB from './PB'; 
 
 const Dashboard = ({ studyData, taskData }) => {
   const taskProgress = taskData.map((task) => ({
@@ -15,7 +15,7 @@ const Dashboard = ({ studyData, taskData }) => {
         <h3>Study Progress</h3>
         <p>Total Time Spent: {studyData.totalTimeSpent} minutes</p>
         {/* Animated progress bar */}
-        <ProgressBar percentage={(studyData.totalTimeSpent / 120) * 100} />
+        <PB percentage={(studyData.totalTimeSpent / 120) * 100} />
       </div>
       <div>
         <h3>Tasks</h3>
@@ -27,7 +27,7 @@ const Dashboard = ({ studyData, taskData }) => {
             transition={{ delay: index * 0.2, duration: 0.6 }}
           >
             <p>{task.taskName}</p>
-            <ProgressBar percentage={task.progress} />
+            <PB percentage={task.progress} />
           </motion.div>
         ))}
       </div>

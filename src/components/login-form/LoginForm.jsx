@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "../login-form/LoginForm.css";
 import { FaUser, FaLock } from "react-icons/fa";
-import { Navigate } from "react-router-dom"; // Importing router for navigation
 import Dashboard from "../Dashboard";
 
 const LoginForm = ({ onRegisterClick, onLoginSuccess }) => {
@@ -13,7 +12,6 @@ const LoginForm = ({ onRegisterClick, onLoginSuccess }) => {
       alert(`Logging in with username: ${username}`);
       if(username=='mg' && password=='1234'){  
       onLoginSuccess(); 
-       Navigate(Dashboard) // Redirect to dashboard on successful login
       };// Notify App that user is logged in
     };
   
