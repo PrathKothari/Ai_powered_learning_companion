@@ -11,3 +11,8 @@ sentence_transformers
 flask
 flask-cors
 python-dotenv
+qdrant-client
+qdrant-client[fastembed]	
+faster_whisper
+sounddevice
+numpy
