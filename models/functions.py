@@ -9,7 +9,7 @@ from langchain.vectorstores import Qdrant
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from langchain_huggingface import HuggingFaceEmbeddings
-# from qdrant_client import QdrantClient
+from qdrant_client import QdrantClient
 # from qdrant_client.http.models import Distance, VectorParams
 import os
 
