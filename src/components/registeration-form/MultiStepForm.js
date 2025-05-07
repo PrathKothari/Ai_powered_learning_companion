@@ -17,8 +17,38 @@ const MultiStepForm = ({ onFinishRegister }) => {
     }
   }, [step]);
 
-  const handleNext = (data) => {
-    setFormData(prev => ({ ...prev, ...data }));
+  const submitToBackend = async (finalData) => {
+    try {
+      const response = await fetch("http://localhost:3001/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(finalData),
+      });
+
+      let resultText = await response.text();
+      let result;
+      try {
+        result = JSON.parse(resultText);
+      } catch {
+        result = { message: resultText };
+      }
+
+      if (!response.ok) {
+        alert("Submission error: " + (result.message || "Unknown error"));
+      } else {
+        console.log("✅ Submission success:", result);
+      }
+    } catch (err) {
+      console.error("❌ Network error:", err);
+      alert("Failed to connect to backend.");
+    }
+  };
+
+  const handleNext = async (data) => {
+    const merged = { ...formData, ...data };
+    setFormData(merged);
 
     if (step === 1) {
       if (data['Password'] !== data['Re-enter Password']) {
@@ -36,9 +66,9 @@ const MultiStepForm = ({ onFinishRegister }) => {
       if (data['Which type of ADHD?'] === "No idea") {
         setStep(4);
       } else {
+        await submitToBackend(merged);
         alert("Form submitted! (Previously Diagnosed)");
-        console.log("Final data:", { ...formData, ...data });
-        onFinishRegister(); // Success
+        onFinishRegister();
       }
     }
 
@@ -49,15 +79,15 @@ const MultiStepForm = ({ onFinishRegister }) => {
         setStep(4);
       } else {
         alert("You likely do not have ADHD.");
-        console.log("Form data:", { ...formData, ...data });
-        onFinishRegister(); // still allow entry for testing/demo
+        await submitToBackend(merged);
+        onFinishRegister();
       }
     }
 
     else if (step === 4) {
-      alert("Final submission complete! (Undiagnosed flow)");
-      console.log("All data submitted:", { ...formData, ...data });
-      onFinishRegister(); // Notify App
+      await submitToBackend(merged);
+      alert("Final submission complete!");
+      onFinishRegister();
     }
   };
 
