@@ -1,14 +1,14 @@
 import os
+from dotenv import load_dotenv
 from qdrant_client import QdrantClient
 from qdrant_client.http.models import Distance, VectorParams
 from langchain_core.documents import Document
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_qdrant import Qdrant
-# qdrant_key = os.getenv('QDRANT_KEY')
-qdrant_key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3MiOiJtIn0.m9qFWsnexcHrqxWOd8IGyiz_ceYrq8X2WDm1RXaGZBo"
-# os.environ['HF_TOKEN']=os.getenv("HF_TOKEN")
-HF_TOKEN="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"
 
+load_dotenv()
+qdrant_key = os.getenv('QDRANT_KEY')
+os.environ['HF_TOKEN']=os.getenv("HF_TOKEN")
 
 def ingest_user_docs(user_id, split_docs, model_name="all-MiniLM-L6-v2"):
     embeddings = HuggingFaceEmbeddings(model_name=model_name)
