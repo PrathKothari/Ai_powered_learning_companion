@@ -3,29 +3,20 @@ from dotenv import load_dotenv
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_groq import ChatGroq
-from langchain.document_loaders import PyPDFLoader
+from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import Qdrant
 from langchain.chains import ConversationalRetrievalChain
 from langchain.memory import ConversationBufferMemory
 from langchain_huggingface import HuggingFaceEmbeddings
-from qdrant_client import QdrantClient
-# from qdrant_client.http.models import Distance, VectorParams
+from langchain.chains import RetrievalQA
+from langchain_core.prompts import PromptTemplate
 import os
+from vector_database import ingest_user_docs
 
 # Load environment variables
 load_dotenv()
 os.environ['GROQ_API_KEY'] = os.getenv('GROQ_API_KEY')
-os.environ['HF_TOKEN']=os.getenv("HF_TOKEN")
-qdrant_key = os.getenv('QDRANT_KEY')
 groq_api_key = os.getenv('GROQ_API_KEY')
-
-embeddings=HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
-
-qdrant_client = QdrantClient(
-    url="https://3148a085-b487-4364-8314-0dd65f9e5d33.europe-west3-0.gcp.cloud.qdrant.io",
-    api_key=qdrant_key
-)
 
 
 def generate_task_plan(task: str, technique: str) -> str:
@@ -45,34 +36,66 @@ def generate_task_plan(task: str, technique: str) -> str:
     return chain.invoke({"task": task, "technique": technique})
 
 
-#Do not remove the comments, the code is to be changed later when the database is ready
-# def text_summariser_personalised_learning(task, interest, information):
-#     llm = ChatGroq(groq_api_key=groq_api_key, model_name = "mixtral-8x7b-32768")
-#     output_parser = StrOutputParser()
-#     system_prompt = (
-#                 "You are a Question-Answer assistant, given the information and the task - {task} to perform"
-#                 "If the task is personalised learning then explain the information in terms of the user's interest and easy to understand language - {interest}"
-#                 "If the task is summarization then be clear in your language, simple to understand and easy to grasp"
-#                 "answer clearly and factually. Do not hallucinate."
-#                 "\n\n"
-#             )
-#     qa_prompt = ChatPromptTemplate.from_messages(
-#                 [
-#                     ("system", system_prompt),
-#                     ("human", "{input}"),
-#                 ]
-#             )
+from langchain.prompts import PromptTemplate
+from langchain.chains import RetrievalQA
+from langchain_core.output_parsers import StrOutputParser
+from langchain_groq import ChatGroq
+
+def text_summariser_personalised_learning(task, interest):
+    # Initialize LLM and output parser
+    llm = ChatGroq(groq_api_key=groq_api_key, model_name="llama-3.3-70b-versatile")
+    output_parser = StrOutputParser()
+
+    # Create retriever
+    retriever = gather_information()  # This must return a retriever (e.g., VectorStoreRetriever)
+
+    # Define the prompt template for the QA chain
+    prompt_template = PromptTemplate(
+        input_variables=["context", "question"],
+        template="""
+You are a Question-Answer assistant, given the information and the task of {task}.
+If the task is personalised learning, explain the information in terms of the user's interest: {interest}, using easy-to-understand language.
+If the task is summarization, be clear, simple, and factual.
+Do not hallucinate. Provide a helpful answer.
+
+Context:
+{context}
+
+Question: {question}
+
+Answer:""".strip().replace("{task}", task).replace("{interest}", interest)
+    )
+
+    # Create the QA chain with the prompt
+    qa_chain = RetrievalQA.from_chain_type(
+        llm=llm,
+        retriever=retriever,
+        chain_type="stuff",
+        chain_type_kwargs={"prompt": prompt_template}
+    )
+
+    # Example question
+    question = "Explain Attention Mechanism"
+
+    # Run the chain and return the result
+    result = qa_chain.run(question)
+    return result
 
 
-# def gather_information():
-#     task="personalised_learning"
-#     interest="cricket"
-#     loader = PyPDFLoader("C:/Users/PRATHAM/OneDrive/Desktop/LangChain/research_papers/Attention.pdf")
-#     documents = loader.load()
-#     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
-#     splits = text_splitter.split_documents(documents)
+def gather_information():
+    # Example of gathering information from a PDF
+    loader = PyPDFLoader("C:/Users/PRATHAM/OneDrive/Desktop/LangChain/research_papers/Attention.pdf")
+    documents = loader.load()
 
+    # Split the document into chunks
+    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
+    splits = text_splitter.split_documents(documents)
 
+    # Use the ingest_user_docs function to return a retriever (you need to define this function separately)
+    return ingest_user_docs(1, splits)
 
+# Call the main function
+result = text_summariser_personalised_learning(task="personalised learning", interest="cricket")
+print(result)
 
 
