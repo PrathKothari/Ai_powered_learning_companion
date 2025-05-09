@@ -8,7 +8,7 @@ from langchain_qdrant import Qdrant
 
 load_dotenv()
 qdrant_key = os.getenv('QDRANT_KEY')
-os.environ['HF_TOKEN']=os.getenv("HF_TOKEN")
+os.environ['HF_TOKEN'] = os.getenv("HF_TOKEN")
 
 def ingest_user_docs(user_id, split_docs, model_name="all-MiniLM-L6-v2"):
     embeddings = HuggingFaceEmbeddings(model_name=model_name)
