@@ -102,10 +102,12 @@ const MultiStepForm = ({ onFinishRegister }) => {
   };
 
   return (
-    <div className="form-container" ref={formRef}>
-      <ProgressBar step={step} />
-      <h2>ADHD Questionnaire</h2>
-      {getStepComponent()}
+    <div className='form-wrapper'>
+      <div className="form-container" ref={formRef}>
+        <ProgressBar step={step} />
+        <h2>ADHD Questionnaire</h2>
+        {getStepComponent()}
+      </div>
     </div>
   );
 };
