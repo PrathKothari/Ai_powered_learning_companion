@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from bson import ObjectId
+from pprint import pprint
 
 def extract_user_data(user_id):
     client = MongoClient('mongodb://localhost:27017/')
@@ -55,14 +56,12 @@ def extract_user_data(user_id):
             return {
                 "status": "diagnosed_no_type",
                 "diagnosis_data": diagnosis_data,
-                "page4_data": page4_data,
-                "zero_to_nine": zero_to_nine_data
+                "page4_data": page4_data
             }
 
         return {
             "status": "diagnosed",
-            "diagnosis_data": diagnosis_data,
-            "zero_to_nine": zero_to_nine_data
+            "diagnosis_data": diagnosis_data
         }
 
     # Case: User not previously diagnosed
@@ -75,7 +74,6 @@ def extract_user_data(user_id):
     moodSwings = user.get("moodSwings")
     exhaustion = user.get("exhaustion")
     hyperfocus = user.get("hyperfocus")
-    timeMgmtAgain = user.get("timeMgmtAgain")
     typeA = user.get("typeA", [])
 
     page3_and_4_data = {
@@ -100,5 +98,5 @@ def extract_user_data(user_id):
 
 # Example usage
 if __name__ == "__main__":
-    user_id = "681bb3913451eb56340dc67f"  # Replace with actual ObjectId as string
-    print(extract_user_data(user_id))
+    user_id = "681bb3fa3451eb56340dc685"  # Replace with actual ObjectId as string
+    pprint(extract_user_data(user_id))
