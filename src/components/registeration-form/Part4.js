@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import './FormStyles.css';
-import { FaQuestionCircle } from 'react-icons/fa'; // Import icon for questions
+import { FaQuestionCircle } from 'react-icons/fa';
 
 const Part4 = ({ onNext }) => {
   const [data, setData] = useState({
     typeA: [],
     academicImpact: '', socialImpact: '', taskImpact: '',
     timeMgmt: '', distractions: '', planning: '',
-    moodSwings: '', exhaustion: '', hyperfocus: '', timeMgmtAgain: ''
+    moodSwings: '', exhaustion: '', hyperfocus: ''
   });
 
   const handleChange = (e) => {
@@ -24,8 +24,30 @@ const Part4 = ({ onNext }) => {
     }));
   };
 
+  const handleInputLimit = (e, max) => {
+    const val = parseInt(e.target.value, 10);
+    if (val > max) e.target.value = max;
+    if (val < 0) e.target.value = 0;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const invalidFields = [];
+
+    ['academicImpact', 'socialImpact', 'taskImpact'].forEach(field => {
+      if (parseInt(data[field], 10) > 3) invalidFields.push(field);
+    });
+
+    ['timeMgmt', 'distractions', 'planning', 'moodSwings', 'exhaustion', 'hyperfocus'].forEach(field => {
+      if (parseInt(data[field], 10) > 4) invalidFields.push(field);
+    });
+
+    if (invalidFields.length > 0) {
+      alert(`Please enter valid values (0–3 or 0–4) for: ${invalidFields.join(', ')}`);
+      return;
+    }
+
     onNext(data);
   };
 
@@ -53,13 +75,6 @@ const Part4 = ({ onNext }) => {
             Impulsive, hyperactive, or restless
           </label>
         </div>
-
-        <div>
-          <label>
-            <input type="checkbox" value="Combined" onChange={handleCheckbox} />
-            Both focus & impulsivity
-          </label>
-        </div>
       </div>
 
       {/* B. Functional Impact */}
@@ -72,21 +87,45 @@ const Part4 = ({ onNext }) => {
         <div>
           <label>
             Academic/Work Impact:
-            <input type="number" name="academicImpact" min="0" max="3" onChange={handleChange} required />
+            <input
+              type="number"
+              name="academicImpact"
+              min="0"
+              max="3"
+              onInput={(e) => handleInputLimit(e, 3)}
+              onChange={handleChange}
+              required
+            />
           </label>
         </div>
 
         <div>
           <label>
             Social Relationship Impact:
-            <input type="number" name="socialImpact" min="0" max="3" onChange={handleChange} required />
+            <input
+              type="number"
+              name="socialImpact"
+              min="0"
+              max="3"
+              onInput={(e) => handleInputLimit(e, 3)}
+              onChange={handleChange}
+              required
+            />
           </label>
         </div>
 
         <div>
           <label>
             Daily Task Impact:
-            <input type="number" name="taskImpact" min="0" max="3" onChange={handleChange} required />
+            <input
+              type="number"
+              name="taskImpact"
+              min="0"
+              max="3"
+              onInput={(e) => handleInputLimit(e, 3)}
+              onChange={handleChange}
+              required
+            />
           </label>
         </div>
       </div>
@@ -101,21 +140,45 @@ const Part4 = ({ onNext }) => {
         <div>
           <label>
             Struggle with time management:
-            <input type="number" name="timeMgmt" min="0" max="4" onChange={handleChange} required />
+            <input
+              type="number"
+              name="timeMgmt"
+              min="0"
+              max="4"
+              onInput={(e) => handleInputLimit(e, 4)}
+              onChange={handleChange}
+              required
+            />
           </label>
         </div>
 
         <div>
           <label>
             Easily distracted:
-            <input type="number" name="distractions" min="0" max="4" onChange={handleChange} required />
+            <input
+              type="number"
+              name="distractions"
+              min="0"
+              max="4"
+              onInput={(e) => handleInputLimit(e, 4)}
+              onChange={handleChange}
+              required
+            />
           </label>
         </div>
 
         <div>
           <label>
             Trouble planning ahead:
-            <input type="number" name="planning" min="0" max="4" onChange={handleChange} required />
+            <input
+              type="number"
+              name="planning"
+              min="0"
+              max="4"
+              onInput={(e) => handleInputLimit(e, 4)}
+              onChange={handleChange}
+              required
+            />
           </label>
         </div>
       </div>
@@ -130,28 +193,45 @@ const Part4 = ({ onNext }) => {
         <div>
           <label>
             Do you experience mood swings?
-            <input type="number" name="moodSwings" min="0" max="4" onChange={handleChange} required />
+            <input
+              type="number"
+              name="moodSwings"
+              min="0"
+              max="4"
+              onInput={(e) => handleInputLimit(e, 4)}
+              onChange={handleChange}
+              required
+            />
           </label>
         </div>
 
         <div>
           <label>
             Do you feel mentally exhausted often?
-            <input type="number" name="exhaustion" min="0" max="4" onChange={handleChange} required />
+            <input
+              type="number"
+              name="exhaustion"
+              min="0"
+              max="4"
+              onInput={(e) => handleInputLimit(e, 4)}
+              onChange={handleChange}
+              required
+            />
           </label>
         </div>
 
         <div>
           <label>
             Do you hyperfocus on certain tasks?
-            <input type="number" name="hyperfocus" min="0" max="4" onChange={handleChange} required />
-          </label>
-        </div>
-
-        <div>
-          <label>
-            Do you struggle with time even when reminded?
-            <input type="number" name="timeMgmtAgain" min="0" max="4" onChange={handleChange} required />
+            <input
+              type="number"
+              name="hyperfocus"
+              min="0"
+              max="4"
+              onInput={(e) => handleInputLimit(e, 4)}
+              onChange={handleChange}
+              required
+            />
           </label>
         </div>
       </div>

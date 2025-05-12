@@ -1,50 +1,96 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import LoginForm from "./components/login-form/LoginForm.jsx";
 import MultiStepForm from "./components/registeration-form/MultiStepForm.js";
 import Dashboard from "./components/Dashboard.js";
 import Timer from "./components/Timer.js";
+import TaskList from "./components/TaskList.js";
+import SummaryPage from "./pages/SummaryPage.js";
+
 import DarkModeToggle from "./components/DarkModeToggle.js";
 import { TimerProvider } from "./context/TimerContext.js";
 import "./App.css";
 
-function App() {
-  const [isRegistering, setIsRegistering] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+function AppWrapper() {
+  return (
+    <TimerProvider>
+      <Router>
+        <App />
+      </Router>
+    </TimerProvider>
+  );
+}
 
-  // Renders login or registration form if user is not logged in
-  const renderAuthScreen = () => {
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isRegistering, setIsRegistering] = useState(false);
+  const navigate = useNavigate();
+
+  const AuthPage = () => {
     return isRegistering ? (
-      <MultiStepForm onFinishRegister={() => setIsLoggedIn(true)} />
+      <MultiStepForm onFinishRegister={() => setIsRegistering(false)} />
     ) : (
       <LoginForm
-        onLoginSuccess={() => setIsLoggedIn(true)}
+        onLoginSuccess={() => {
+          setIsLoggedIn(true);
+          navigate("/dashboard");
+        }}
         onRegisterClick={() => setIsRegistering(true)}
       />
     );
   };
 
-// Renders main dashboard with Pomodoro and theme toggle
-  const renderDashboard = () => (
-    <TimerProvider>
-      <div className="App">
-        <h1>AI Learning Companion</h1>
-        <DarkModeToggle />
-        <Timer
-          focusTime={25}
-          breakTime={5}
-          onFocusComplete={() => console.log("Focus time complete")}
-          onBreakComplete={() => console.log("Break complete")}
-        />
-        <Dashboard />
-      </div>
-    </TimerProvider>
-  );
+  const ProtectedRoute = ({ children }) => {
+    return isLoggedIn ? children : <Navigate to="/" />;
+  };
 
   return (
-    <div className="App">
-      {isLoggedIn ? renderDashboard() : renderAuthScreen()}
-    </div>
+    <Routes>
+      <Route path="/" element={<AuthPage />} />
+
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <div className="App">
+              <h1>AI Learning Companion</h1>
+              <DarkModeToggle />
+              <Timer
+                focusTime={25}
+                breakTime={5}
+                onFocusComplete={() => console.log("Focus time complete")}
+                onBreakComplete={() => console.log("Break complete")}
+              />
+              <Dashboard />
+            </div>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/tasks"
+        element={
+          <ProtectedRoute>
+            <div className="App">
+              <h1>Tasks</h1>
+              <TaskList />
+            </div>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/summary"
+        element={
+          <ProtectedRoute>
+            <div className="App">
+              <SummaryPage />
+            </div>
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   );
 }
 
-export default App;
+export default AppWrapper;

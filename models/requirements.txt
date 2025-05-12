@@ -1,6 +1,7 @@
 langchain
 langchain_community
 langchain-text-splitters
+langchain_qdrant
 bs4
 langchain_groq
 langchain_core
@@ -16,3 +17,4 @@ qdrant-client[fastembed]
 faster_whisper
 sounddevice
 numpy
+pypdf
