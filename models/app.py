@@ -3,6 +3,7 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
 from functions import generate_task_plan, text_summariser_personalised_learning
+import requests
 
 app = Flask(__name__)
 CORS(app)
@@ -56,22 +57,22 @@ def login():
     # Get data from client request
     data = request.json
     if not data or not data.get('username') or not data.get('password'):
-        print (jsonify({'error': 'Missing username or password'}), 400)
+        return (jsonify({'error': 'Missing username or password'}), 400)
 
     try:
         # Forward login request to Node.js backend
         response = requests.post(NODE_SERVER_URL, json=data)
         if response.status_code == 200:
             result = response.json()
-            print (jsonify({
+            return (jsonify({
                 'message': 'Login successful',
                 'username': result.get('username'),
                 'userId': result.get('userId')
             }))
         else:
-            print (jsonify({'error': response.text}), response.status_code)
+            return (jsonify({'error': response.text}), response.status_code)
     except Exception as e:
-        print (jsonify({'error': str(e)}), 500)
+        return (jsonify({'error': str(e)}), 500)
     
 if __name__ == '__main__':
     app.run(debug=True)
