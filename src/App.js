@@ -16,37 +16,43 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Apply theme class to body
     document.documentElement.className = theme;
   }, [theme]);
 
-  const AuthPage = () => {
-    return isRegistering ? (
+  const AuthPage = () =>
+    isRegistering ? (
       <MultiStepForm onFinishRegister={() => setIsRegistering(false)} />
     ) : (
       <LoginForm
         onLoginSuccess={() => {
           setIsLoggedIn(true);
-          navigate('/dashboard');
+          navigate('/'); // Navigate to HomePage after login
         }}
         onRegisterClick={() => setIsRegistering(true)}
       />
     );
-  };
 
-  const ProtectedRoute = ({ children }) => {
-    return isLoggedIn ? children : <Navigate to="/" />;
-  };
+  const ProtectedRoute = ({ children }) =>
+    isLoggedIn ? children : <Navigate to="/login" replace />;
 
   return (
     <Routes>
-      <Route path="/" element={<AuthPage />} />
+      {/* Public Routes */}
       <Route path="/login" element={<AuthPage />} />
       <Route path="/register" element={<AuthPage />} />
-      
+
+      {/* Protected Layout */}
       <Route path="/" element={<Layout />}>
         <Route
-          path="/dashboard"
+          index
+          element={
+            <ProtectedRoute>
+              <HomePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="dashboard"
           element={
             <ProtectedRoute>
               <DashboardPage />
@@ -54,7 +60,7 @@ function App() {
           }
         />
         <Route
-          path="/tasks"
+          path="tasks"
           element={
             <ProtectedRoute>
               <TasksPage />
@@ -62,7 +68,7 @@ function App() {
           }
         />
         <Route
-          path="/summary"
+          path="summary"
           element={
             <ProtectedRoute>
               <SummaryPage />
