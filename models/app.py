@@ -50,29 +50,43 @@ def upload_file():
     except Exception as e:
         return jsonify({'error': f'Error during file processing: {str(e)}'}), 500
 
-NODE_SERVER_URL = 'http://localhost:3001/login'  # Your Node.js login endpoint
+NODE_SERVER_URL = 'http://localhost:3001/api/auth/login'
 
-@app.route('/login', methods=['POST'])
-def login():
-    # Get data from client request
-    data = request.json
-    if not data or not data.get('username') or not data.get('password'):
-        return (jsonify({'error': 'Missing username or password'}), 400)
+# @app.route('/login', methods=['POST'])
+# def login():
+#     print("🔔 Received login request")
+#     data = request.json
+#     print("📦 Data:", data)
 
-    try:
-        # Forward login request to Node.js backend
-        response = requests.post(NODE_SERVER_URL, json=data)
-        if response.status_code == 200:
-            result = response.json()
-            return (jsonify({
-                'message': 'Login successful',
-                'username': result.get('username'),
-                'userId': result.get('userId')
-            }))
-        else:
-            return (jsonify({'error': response.text}), response.status_code)
-    except Exception as e:
-        return (jsonify({'error': str(e)}), 500)
+#     if not data or not data.get('username') or not data.get('password'):
+#         return jsonify({'error': 'Missing username or password'}), 400
+
+#     try:
+#         response = requests.post(NODE_SERVER_URL, json=data)
+#         print("📡 Sent to Node.js, Status:", response.status_code)
+#         print("📨 Raw Response:", response.text)
+
+#         if response.status_code == 200:
+#             result = response.json()
+#             return jsonify({'message': 'Login successful', 'username': result.get('username')})
+#         else:
+#             return jsonify({'error': response.text}), response.status_code
+#     except Exception as e:
+#         print("🔥 Exception:", str(e))
+#         return jsonify({'error': str(e)}), 500
+
+
+@app.route('/api/some-action', methods=['POST'])
+def receive_username():
+    data = request.get_json()
+    username = data.get('username')
+
+    print("✅ Got username from Node login:", username)
+
+    # Use it for whatever logic you want
+    return username
+
+    app.run(port=5000, debug=True)
     
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,109 @@
+/* src/components/Dashboard.css */
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  color: #2c3e50;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-mode {
+  background-color: #1e1e2f;
+  color: #e0e0e0;
+}
+
+.dashboard-container {
+  padding: 20px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.dashboard-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.dashboard-header h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.dashboard-subtitle {
+  font-size: 1.2rem;
+  color: #7f8c8d;
+  margin-top: 5px;
+}
+
+.dashboard-nav {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 15px;
+}
+
+.dashboard-nav a {
+  text-decoration: none;
+  color: #2980b9;
+  font-weight: bold;
+}
+
+.dashboard-nav a:hover {
+  text-decoration: underline;
+}
+
+.dashboard-main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.dashboard-card {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  padding: 20px;
+  transition: background-color 0.3s ease;
+}
+
+body.dark-mode .dashboard-card {
+  background-color: #2e2e3d;
+}
+
+.dashboard-card h2 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  font-size: 1.4rem;
+}
+
+.summary-link {
+  display: inline-block;
+  margin-top: 10px;
+  color: #16a085;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.summary-link:hover {
+  text-decoration: underline;
+}
+
+/* Accessibility Focus: */
+button, a {
+  outline: none;
+}
+
+button:focus, a:focus {
+  outline: 3px solid #3498db;
+  outline-offset: 3px;
+}
+
+/* Helpful transition for ADHD users */
+.dashboard-card, .dashboard-nav a, .summary-link {
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 600px) {
+  .dashboard-main {
+    grid-template-columns: 1fr;
+  }
+}
