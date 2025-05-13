@@ -23,21 +23,6 @@ const LoginForm = ({ onRegisterClick, onLoginSuccess }) => {
 
       if (response.ok) {
         alert(data.message);
-        
-        localStorage.setItem("username", data.username);
-
-  // ✅ Send username to Python backend
-        fetch('http://localhost:5000/api/some-action', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username: data.username })
-        })
-        .then(res => res.json())
-        .then(pythonRes => {
-          console.log("Python backend says:", pythonRes.message);
-        })
-        .catch(err => console.error("Error:", err));
-
         if (onLoginSuccess) onLoginSuccess(); // Optional dashboard trigger
       } else {
         alert(`Login failed: ${data.message}`);
