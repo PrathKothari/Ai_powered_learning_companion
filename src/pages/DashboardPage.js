@@ -1,19 +1,61 @@
-import React from 'react';
+import { motion } from 'framer-motion';
 import Timer from '../components/Timer';
 import Dashboard from '../components/Dashboard';
-import { Link } from 'react-router-dom';
+import MotivationalMessage from '../components/MotivationalMessage';
+import { useTimer } from '../contexts/TimerContext';
+import { useTask } from '../contexts/TaskContext';
 
-function DashboardPage() {
+const DashboardPage = () => {
+  const { todayStudyTime } = useTimer();
+  const { tasks } = useTask();
+  
+  const completedTasksPercentage = 
+    tasks.length > 0 
+      ? (tasks.filter(task => task.completed).length / tasks.length) * 100 
+      : 0;
+  
+  // Calculate study time in minutes for the motivational message
+  const studyTimeMinutes = Math.floor(todayStudyTime / 60);
+  
   return (
-    <div className="p-8 bg-purple-900 min-h-screen text-white">
-      <h2 className="text-3xl font-bold mb-4">Dashboard</h2>
-      <Timer focusTime={25} breakTime={5} />
-      <Dashboard />
-      <Link to="/tasks" className="mt-6 inline-block bg-white text-black px-4 py-2 rounded shadow">
-        Go to Tasks
-      </Link>
+    <div className="max-w-5xl mx-auto">
+      <motion.h1 
+        className="text-2xl md:text-3xl font-bold mb-6"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        Dashboard
+      </motion.h1>
+      
+      <div className="mb-6">
+        <MotivationalMessage 
+          taskCompletion={completedTasksPercentage} 
+          studyTime={studyTimeMinutes}
+        />
+      </div>
+      
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <motion.div 
+          className="lg:col-span-2"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          <Timer />
+        </motion.div>
+        
+        <motion.div 
+          className="lg:col-span-3"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <Dashboard />
+        </motion.div>
+      </div>
     </div>
   );
-}
+};
 
 export default DashboardPage;
