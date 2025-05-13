@@ -27,11 +27,12 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Apply theme class to body
     document.documentElement.className = theme;
   }, [theme]);
 
-  const AuthPage = () =>
-    isRegistering ? (
+  const AuthPage = () => {
+    return isRegistering ? (
       <MultiStepForm onFinishRegister={() => setIsRegistering(false)} />
     ) : (
       <LoginForm
@@ -39,13 +40,16 @@ function App() {
           setIsLoggedIn(true);
           navigate("/dashboard");
           navigate('/'); // Navigate to HomePage after login
+          navigate('/dashboard');
         }}
         onRegisterClick={() => setIsRegistering(true)}
       />
     );
+  };
 
-  const ProtectedRoute = ({ children }) =>
-    isLoggedIn ? children : <Navigate to="/login" replace />;
+  const ProtectedRoute = ({ children }) => {
+    return isLoggedIn ? children : <Navigate to="/" />;
+  };
 
   return (
     <Routes>
@@ -88,21 +92,13 @@ function App() {
           <ProtectedRoute>
             <div className="App">
       {/* Public Routes */}
+      <Route path="/" element={<AuthPage />} />
       <Route path="/login" element={<AuthPage />} />
       <Route path="/register" element={<AuthPage />} />
-
-      {/* Protected Layout */}
+      
       <Route path="/" element={<Layout />}>
         <Route
-          index
-          element={
-            <ProtectedRoute>
-              <HomePage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="dashboard"
+          path="/dashboard"
           element={
             <ProtectedRoute>
               <DashboardPage />
@@ -110,7 +106,7 @@ function App() {
           }
         />
         <Route
-          path="tasks"
+          path="/tasks"
           element={
             <ProtectedRoute>
               <TasksPage />
@@ -118,7 +114,7 @@ function App() {
           }
         />
         <Route
-          path="summary"
+          path="/summary"
           element={
             <ProtectedRoute>
               <SummaryPage />
