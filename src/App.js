@@ -26,10 +26,6 @@ function App() {
   const [isRegistering, setIsRegistering] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Apply theme class to body
-    document.documentElement.className = theme;
-  }, [theme]);
 
   const AuthPage = () => {
     return isRegistering ? (
@@ -39,13 +35,12 @@ function App() {
         onLoginSuccess={() => {
           setIsLoggedIn(true);
           navigate("/dashboard");
-          navigate('/'); // Navigate to HomePage after login
-          navigate('/dashboard');
         }}
         onRegisterClick={() => setIsRegistering(true)}
       />
     );
   };
+
 
   const ProtectedRoute = ({ children }) => {
     return isLoggedIn ? children : <Navigate to="/" />;
@@ -54,7 +49,6 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<AuthPage />} />
-
       <Route
         path="/dashboard"
         element={
@@ -91,32 +85,6 @@ function App() {
         element={
           <ProtectedRoute>
             <div className="App">
-      {/* Public Routes */}
-      <Route path="/" element={<AuthPage />} />
-      <Route path="/login" element={<AuthPage />} />
-      <Route path="/register" element={<AuthPage />} />
-      
-      <Route path="/" element={<Layout />}>
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <DashboardPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/tasks"
-          element={
-            <ProtectedRoute>
-              <TasksPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/summary"
-          element={
-            <ProtectedRoute>
               <SummaryPage />
             </div>
           </ProtectedRoute>
