@@ -10,7 +10,7 @@ load_dotenv()
 qdrant_key = os.getenv('QDRANT_KEY')
 os.environ['HF_TOKEN'] = os.getenv("HF_TOKEN")
 
-def ingest_user_docs(user_id, split_docs, model_name="all-MiniLM-L6-v2"):
+def ingest_user_docs(username, split_docs, model_name="all-MiniLM-L6-v2"):
     embeddings = HuggingFaceEmbeddings(model_name=model_name)
 
     qdrant_client = QdrantClient(
@@ -28,7 +28,7 @@ def ingest_user_docs(user_id, split_docs, model_name="all-MiniLM-L6-v2"):
         )
 
     docs = [
-        Document(page_content=doc.page_content, metadata={**doc.metadata, "user_id": user_id})
+        Document(page_content=doc.page_content, metadata={**doc.metadata, "user_id": username})
         for doc in split_docs
     ]
 
@@ -42,7 +42,7 @@ def ingest_user_docs(user_id, split_docs, model_name="all-MiniLM-L6-v2"):
 
     retriever = qdrant_vectorstore.as_retriever(
         search_type="similarity",
-        search_kwargs={"k": 3, "filter": {"user_id": user_id}}
+        search_kwargs={"k": 3, "filter": {"user_id": username}}
     )
 
     return retriever
