@@ -9,18 +9,55 @@
 }
 body {
   font-family:'Poppins',sans-serif;
-    
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  display : flex;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  min-height: 100vh;
+}
+
+/* Login/Register specific background */
+.auth-background {
+  display: flex;
   justify-content: center;
   align-items: center;
-  min-height:100vh;
-  background:url('./components/assets/background.jpg') no-repeat;
+  min-height: 100vh;
+  background: url('./components/assets/background.jpg') no-repeat;
   background-size: cover;
-  background-position: center ;
-
+  background-position: center;
 }
+
+/* General app background */
+.default-bg {
+  background-color: white;
+  min-height: 100vh;
+}
+
+.grey-bg {
+  background-color: #f0f0f0;
+  min-height: 100vh;
+}
+.auth-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url('./components/assets/background.jpg') no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.grey-bg {
+  background-color: #f0f0f0;
+  min-height: 100vh;
+}
+.main-container {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-behavior: smooth;
+}
+
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
