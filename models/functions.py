@@ -6,10 +6,8 @@ from langchain_groq import ChatGroq
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains import RetrievalQA
-
 from vector_database import ingest_user_docs
 
-# Load environment variables
 load_dotenv()
 groq_api_key = os.getenv('GROQ_API_KEY')
 
