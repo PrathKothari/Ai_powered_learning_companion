@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 .App {
   text-align: center;
 }
@@ -43,7 +44,6 @@
   }
 }
 
-/* For devices with width <= 480px */
 @media (max-width: 480px) {
   .App-header {
     font-size: calc(10px + 1vmin); /* Further reduce font size on phones */
@@ -80,4 +80,15 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+/* 🎨 Custom Background Styling */
+.default-bg {
+  background-color: white;
+  min-height: 100vh;
+}
+
+.grey-bg {
+  background-color: #f0f0f0; /* Light grey for dashboard and others */
+  min-height: 100vh;
 }
