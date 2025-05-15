@@ -1,20 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-*{
+
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
 body {
-  font-family:'Poppins',sans-serif;
+  font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 /* Login/Register specific background */
@@ -28,9 +34,9 @@ body {
   background-position: center;
 }
 
-/* General app background */
+/* General app background for dashboard/summary pages */
 .default-bg {
-  background-color: white;
+  background-color: #f5f0fa; /* Light purple */
   min-height: 100vh;
 }
 
@@ -38,32 +44,15 @@ body {
   background-color: #f0f0f0;
   min-height: 100vh;
 }
-.auth-background {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: url('./components/assets/background.jpg') no-repeat;
-  background-size: cover;
-  background-position: center;
-}
 
-.grey-bg {
-  background-color: #f0f0f0;
-  min-height: 100vh;
-}
+/* Scrollable container for dashboard layout */
 .main-container {
   height: 100vh;
   overflow-y: auto;
   scroll-behavior: smooth;
 }
 
-
+/* Code font fallback */
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
-html {
-  scroll-behavior: smooth;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
