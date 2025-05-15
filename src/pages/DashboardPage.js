@@ -1,16 +1,32 @@
+// DashboardPage.js (Updated with scroll support and layout fix)
 import React from 'react';
 import Timer from '../components/Timer';
 import Dashboard from '../components/Dashboard';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DarkModeToggle from '../components/DarkModeToggle';
 
-function DashboardPage() {
+function DashboardPage({ onLogout }) {
+  const navigate = useNavigate();
+
+  const handleLogoutClick = () => {
+    if (onLogout) onLogout();
+    navigate('/');
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-100 to-purple-200 text-gray-900 font-sans">
+    <div className="main-container bg-gradient-to-br from-indigo-100 to-purple-200 text-gray-900 font-sans">
       {/* Header */}
-      <header className="flex justify-between items-center px-6 py-4 bg-white shadow-md">
+      <header className="flex justify-between items-center px-6 py-4 bg-white shadow-md sticky top-0 z-50">
         <h1 className="text-2xl font-bold text-indigo-700">AI-Powered Learning Companion</h1>
-        <DarkModeToggle />
+        <div className="flex items-center gap-4">
+          <DarkModeToggle />
+          <button
+            onClick={handleLogoutClick}
+            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+          >
+            Logout
+          </button>
+        </div>
       </header>
 
       {/* Timer Section */}
