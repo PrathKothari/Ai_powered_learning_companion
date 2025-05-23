@@ -12,10 +12,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-<<<<<<< Updated upstream
-=======
     "typeRoots": ["./types", "./node_modules/@types"],
->>>>>>> Stashed changes
     "incremental": true,
     "plugins": [
       {
@@ -23,11 +20,7 @@
       }
     ],
     "paths": {
-<<<<<<< Updated upstream
-      "@/*": ["./src/*"]
-=======
       "@/*": ["./*"]
->>>>>>> Stashed changes
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
