@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import DashboardWrapper from '@/components/DashboardWrapper';
+import DashboardWrapper from '../../components/DashboardWrapper';
 
 export default function DashboardPage() {
   const router = useRouter(); // You'll need this if you uncomment the redirect

@@ -1,8 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Flashcard from '@/components/Flashcard';
-import DarkModeToggle from '@/components/DarkModeToggle';
+import Flashcard from '../../components/Flashcard';
+import DarkModeToggle from '../../components/DarkModeToggle';
 import { useRouter } from 'next/navigation';
 
 const sampleFlashcards = [

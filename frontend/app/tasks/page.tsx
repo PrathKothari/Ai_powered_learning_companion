@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import TaskList from '@/components/TaskList';
-import TaskProgressChart from '@/components/TaskProgressChart';
-import ActivityHeatmap from '@/components/ActivityHeatmap';
+import TaskList from '../../components/TaskList';
+import TaskProgressChart from '../../components/TaskProgressChart';
+import ActivityHeatmap from '../../components/ActivityHeatmap';
 import { useRouter } from 'next/navigation';
 
 export interface Task {
