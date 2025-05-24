@@ -31,7 +31,6 @@ elif mode == "Document-Based Learning / Summarization":
     # Step 2: Choose sub-task
     sub_task = st.radio("Select your goal:", ["Personalised Learning", "Text Summariser"], horizontal=True)
 
-    username = st.text_input("Enter your username:")
     uploaded_file = st.file_uploader("Upload a PDF document", type="pdf")
     interest = st.text_input("Your interest (for explanations):")
 
@@ -49,8 +48,8 @@ elif mode == "Document-Based Learning / Summarization":
                     task=sub_task,
                     interest=interest,
                     filepath=st.session_state.temp_file_path,
-                    question=question,
-                    username=username
+                    question=question
+
                 )
                 # Append to chat history
                 st.session_state.chat_history.append(("user", question))

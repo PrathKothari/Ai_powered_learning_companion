@@ -24,18 +24,18 @@ def generate_task_plan(task: str, technique: str) -> str:
     chain = prompt | llm | StrOutputParser()
     return chain.invoke({"task": task, "technique": technique})
 
-def gather_information(filepath, username):
+def gather_information(filepath):
     loader = PyPDFLoader(filepath)
     documents = loader.load()
 
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
     splits = text_splitter.split_documents(documents)
 
-    return ingest_user_docs(username=username, split_docs=splits)
+    return ingest_user_docs(split_docs=splits)
 
-def text_summariser_personalised_learning(task, interest, filepath, question, username):
+def text_summariser_personalised_learning(task, interest, filepath, question):
     llm = ChatGroq(groq_api_key=groq_api_key, model_name="llama3-70b-8192")
-    retriever = gather_information(filepath, username)
+    retriever = gather_information(filepath)
 
     prompt_template = PromptTemplate(
         input_variables=["context", "question"],
