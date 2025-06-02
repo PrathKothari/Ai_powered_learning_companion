@@ -20,6 +20,9 @@ mongoose.connect('mongodb://localhost:27017/userDB', {
 const authRoutes = require('./routes/auth');
 app.use('/api/auth', authRoutes);
 
+const communityRoutes = require('./routes/community');
+app.use('/api/community', communityRoutes);
+
 // Start server
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
