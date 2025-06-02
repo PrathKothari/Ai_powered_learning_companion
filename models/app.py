@@ -3,8 +3,6 @@ from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
 from functions import generate_task_plan, text_summariser_personalised_learning
-import requests
-import shared_data
 
 app = Flask(__name__)
 CORS(app)
@@ -46,18 +44,34 @@ def upload_file():
     file.save(filepath)
 
     try:
-        result = text_summariser_personalised_learning(task, interest, filepath, question, shared_data.username)
+        result = text_summariser_personalised_learning(task, interest, filepath, question)
         return jsonify({'result': result})
     except Exception as e:
         return jsonify({'error': f'Error during file processing: {str(e)}'}), 500
 
-@app.route('/api/some-action', methods=['POST'])
-def receive_username():
-    data = request.get_json()
-    shared_data.username = data.get('username')
+NODE_SERVER_URL = 'http://localhost:3001/login'  # Your Node.js login endpoint
 
-    print("✅ Got username from Node login:", shared_data.username)
-    return jsonify({"message": "Username received"}), 200
+@app.route('/login', methods=['POST'])
+def login():
+    # Get data from client request
+    data = request.json
+    if not data or not data.get('username') or not data.get('password'):
+        print (jsonify({'error': 'Missing username or password'}), 400)
+
+    try:
+        # Forward login request to Node.js backend
+        response = requests.post(NODE_SERVER_URL, json=data)
+        if response.status_code == 200:
+            result = response.json()
+            print (jsonify({
+                'message': 'Login successful',
+                'username': result.get('username'),
+                'userId': result.get('userId')
+            }))
+        else:
+            print (jsonify({'error': response.text}), response.status_code)
+    except Exception as e:
+        print (jsonify({'error': str(e)}), 500)
     
 if __name__ == '__main__':
-    app.run(port=5000, debug=True)
+    app.run(debug=True)

@@ -6,8 +6,10 @@ from langchain_groq import ChatGroq
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.chains import RetrievalQA
+
 from vector_database import ingest_user_docs
 
+# Load environment variables
 load_dotenv()
 groq_api_key = os.getenv('GROQ_API_KEY')
 
@@ -31,7 +33,7 @@ def gather_information(filepath):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=150)
     splits = text_splitter.split_documents(documents)
 
-    return ingest_user_docs(split_docs=splits)
+    return ingest_user_docs(user_id=1, split_docs=splits)
 
 def text_summariser_personalised_learning(task, interest, filepath, question):
     llm = ChatGroq(groq_api_key=groq_api_key, model_name="llama3-70b-8192")
