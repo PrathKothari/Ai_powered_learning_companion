@@ -42,8 +42,8 @@ def text_summariser_personalised_learning(task, interest, filepath, question):
         template=f"""
         You are a Question-Answer assistant, given the information and the task of {task}.
         If the task is personalised learning, explain the information in terms of the user's interest: {interest}, using easy-to-understand language.
-        If the task is summarization, be clear, simple, and factual.
-        Do not hallucinate. Provide a helpful answer.
+        If the task is summarization generate long paragraphs, use the context (document) given and do onot summarize in the interest. 
+        Do not hallucinate, use the document provided. Provide helpful answer.
 
         Context:
         {{context}}

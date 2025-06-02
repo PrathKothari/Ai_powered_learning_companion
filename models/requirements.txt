@@ -1,14 +1,14 @@
 langchain
-langchain_community
+langchain-community
 langchain-text-splitters
-langchain_qdrant
+langchain-qdrant
 bs4
 langchain_groq
 langchain_core
 huggingface_hub
 wikipedia
-langchain_huggingface
-sentence_transformers
+langchain-huggingface
+sentence-transformers
 flask
 flask-cors
 python-dotenv
@@ -18,3 +18,6 @@ faster_whisper
 sounddevice
 numpy
 pypdf
+# pyttsx3
+edge-tts
+pydub
