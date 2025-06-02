@@ -38,22 +38,34 @@ router.post('/channels/:channelId/posts/:postId/upvote', async (req, res) => {
   res.json(post);
 });
 
-// Get comments for a post (per-channel DB)
+// Get comments for a post (per-channel DB, supports nested tree)
 router.get('/channels/:channelId/posts/:postId/comments', async (req, res) => {
   const channel = await Channel.findById(req.params.channelId);
   if (!channel) return res.status(404).json({ message: 'Channel not found' });
   const { Comment } = getChannelDb(channel.name);
+  // Fetch all comments for the post
   const comments = await Comment.find({ post: req.params.postId }).sort({ createdAt: 1 });
-  res.json(comments);
+  // Build a tree structure
+  const commentMap = {};
+  comments.forEach(c => commentMap[c._id] = { ...c.toObject(), children: [] });
+  const tree = [];
+  comments.forEach(c => {
+    if (c.parentId) {
+      commentMap[c.parentId]?.children.push(commentMap[c._id]);
+    } else {
+      tree.push(commentMap[c._id]);
+    }
+  });
+  res.json(tree);
 });
 
-// Add a comment to a post (per-channel DB)
+// Add a comment to a post (per-channel DB, supports nested comments)
 router.post('/channels/:channelId/posts/:postId/comments', async (req, res) => {
   const channel = await Channel.findById(req.params.channelId);
   if (!channel) return res.status(404).json({ message: 'Channel not found' });
   const { Comment } = getChannelDb(channel.name);
-  const { author, content } = req.body;
-  const comment = new Comment({ post: req.params.postId, author, content });
+  const { author, content, parentId } = req.body; // parentId is optional for nested comments
+  const comment = new Comment({ post: req.params.postId, author, content, parentId: parentId || null });
   await comment.save();
   res.status(201).json(comment);
 });
