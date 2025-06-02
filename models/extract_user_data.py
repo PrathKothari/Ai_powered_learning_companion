@@ -96,7 +96,6 @@ def extract_user_data(user_id):
         "zero_to_nine": zero_to_nine_data
     }
 
-# Example usage
 if __name__ == "__main__":
     user_id = "681bb3fa3451eb56340dc685"  # Replace with actual ObjectId as string
     pprint(extract_user_data(user_id))
